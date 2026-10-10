@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Exploratory Data Analysis Dashboard</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo/images.jpg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Main Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress"></div>
+
+    <!-- Background Particle Animation -->
+    <div id="particles-js"></div>
+
+    <!-- Navbar -->
+    <header class="navbar-container" id="navbar">
+        <div class="nav-brand">
+            <img src="assets/logo/images.jpg" alt="Netflix Logo" class="nav-logo" id="app-logo">
+            <span class="nav-title">Analytics Engine</span>
+        </div>
+        <nav class="nav-menu" id="nav-menu">
+            <a href="#hero" class="nav-link active"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="#overview" class="nav-link"><i class="fa-solid fa-chart-line"></i> Overview</a>
+            <a href="#dataset" class="nav-link"><i class="fa-solid fa-table"></i> Dataset</a>
+            <a href="#visualizations" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Visualizations</a>
+            <a href="#insights" class="nav-link"><i class="fa-solid fa-lightbulb"></i> Insights</a>
+            <a href="#downloads" class="nav-link"><i class="fa-solid fa-download"></i> Downloads</a>
+        </nav>
+        <div class="nav-actions">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="global-search" placeholder="Search title, actor...">
+            </div>
+            <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <img src="assets/logo/images.jpg" alt="Netflix Big Logo" class="hero-logo">
+            <h1 class="hero-title">Netflix Exploratory Data Analysis</h1>
+            <p class="hero-subtitle">Interactive Deep-Dive into Global Streaming Trends, Ratings, Genres & Content Metrics</p>
+            <p class="hero-description">
+                Explore an end-to-end dataset analysis of 8,709 Netflix Movies & TV Shows. Uncover historical release dynamics, geographic concentrations, top content creators, and runtime distributions through custom interactive charts.
+            </p>
+            <div class="hero-buttons">
+                <a href="#visualizations" class="btn btn-primary"><i class="fa-solid fa-play"></i> Explore Dashboard</a>
+                <a href="#dataset" class="btn btn-secondary"><i class="fa-solid fa-database"></i> View Data Table</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- KPI Overview Section -->
+    <section class="section-container" id="overview">
+        <div class="section-header" data-aos="fade-right">
+            <h2><i class="fa-solid fa-gauge-high"></i> Dataset Metrics & KPIs</h2>
+            <p>Real-time dataset totals and key performance indicators</p>
+        </div>
+        <div class="kpi-grid">
+            <div class="kpi-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="kpi-icon"><i class="fa-solid fa-film"></i></div>
+                <div class="kpi-data">
+                    <h3 class="counter" id="kpi-total-titles">8709</h3>
+                    <p>Total Titles</p>
+                </div>
+            </div>
+            <div class="kpi-card" data-aos="zoom-in" data-aos-delay="150">
+                <div class="kpi-icon"><i class="fa-solid fa-clapperboard"></i></div>
+                <div class="kpi-data">
+                    <h3 class="counter" id="kpi-movies">6126</h3>
+                    <p>Movies</p>
+                </div>
+            </div>
+            <div class="kpi-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="kpi-icon"><i class="fa-solid fa-tv"></i></div>
+                <div class="kpi-data">
+                    <h3 class="counter" id="kpi-tvshows">2583</h3>
+                    <p>TV Shows</p>
+                </div>
+            </div>
+            <div class="kpi-card" data-aos="zoom-in" data-aos-delay="250">
+                <div class="kpi-icon"><i class="fa-solid fa-globe"></i></div>
+                <div class="kpi-data">
+                    <h3 class="counter" id="kpi-countries">746</h3>
+                    <p>Countries Represented</p>
+                </div>
+            </div>
+            <div class="kpi-card" data-aos="zoom-in" data-aos-delay="300">
+                <div class="kpi-icon"><i class="fa-solid fa-video"></i></div>
+                <div class="kpi-data">
+                    <h3 class="counter" id="kpi-directors">4525</h3>
+                    <p>Unique Directors</p>
+                </div>
+            </div>
+            <div class="kpi-card" data-aos="zoom-in" data-aos-delay="350">
+                <div class="kpi-icon"><i class="fa-solid fa-masks-theater"></i></div>
+                <div class="kpi-data">
+                    <h3 class="counter" id="kpi-genres">509</h3>
+                    <p>Genre Combinations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Dynamic Filter Bar -->
+    <section class="section-container" id="filters-section">
+        <div class="filter-panel" data-aos="fade-up">
+            <div class="filter-header">
+                <h3><i class="fa-solid fa-filter"></i> Dynamic Interactive Filters</h3>
+                <button id="reset-filters-btn" class="btn-sm btn-outline"><i class="fa-solid fa-rotate-left"></i> Reset Filters</button>
+            </div>
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label for="filter-type">Content Type</label>
+                    <select id="filter-type">
+                        <option value="All">All Types</option>
+                        <option value="Movie">Movie</option>
+                        <option value="TV Show">TV Show</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-country">Country</label>
+                    <select id="filter-country">
+                        <option value="All">All Countries</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-genre">Genre</label>
+                    <select id="filter-genre">
+                        <option value="All">All Genres</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-rating">Rating</label>
+                    <select id="filter-rating">
+                        <option value="All">All Ratings</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-year">Release Year</label>
+                    <select id="filter-year">
+                        <option value="All">All Years</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10 Interactive Visualizations Section -->
+    <section class="section-container" id="visualizations">
+        <div class="section-header" data-aos="fade-right">
+            <h2><i class="fa-solid fa-chart-column"></i> Interactive Visualizations (10 Charts)</h2>
+            <p>Explore high-performance analytics powered by Chart.js and Apache ECharts</p>
+        </div>
+
+        <div class="charts-grid">
+            <!-- Chart 1 -->
+            <div class="chart-card" data-aos="fade-up">
+                <div class="chart-card-header">
+                    <h4>1. Movies vs. TV Shows Distribution</h4>
+                    <button class="export-btn" onclick="exportChart('chart1')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart1"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2 -->
+            <div class="chart-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="chart-card-header">
+                    <h4>2. Top 10 Popular Genres</h4>
+                    <button class="export-btn" onclick="exportChart('chart2')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 3 -->
+            <div class="chart-card" data-aos="fade-up">
+                <div class="chart-card-header">
+                    <h4>3. Top 10 Content Producing Countries</h4>
+                    <button class="export-btn" onclick="exportChart('chart3')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart3"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 4 -->
+            <div class="chart-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="chart-card-header">
+                    <h4>4. Content Release Trend by Year</h4>
+                    <button class="export-btn" onclick="exportChart('chart4')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart4"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 5 -->
+            <div class="chart-card" data-aos="fade-up">
+                <div class="chart-card-header">
+                    <h4>5. Content Ratings Distribution</h4>
+                    <button class="export-btn" onclick="exportChart('chart5')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart5"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 6 -->
+            <div class="chart-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="chart-card-header">
+                    <h4>6. Movie Duration Distribution (Minutes)</h4>
+                    <button class="export-btn" onclick="exportChart('chart6')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart6"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 7 -->
+            <div class="chart-card" data-aos="fade-up">
+                <div class="chart-card-header">
+                    <h4>7. Top Directors by Content Volume</h4>
+                    <button class="export-btn" onclick="exportChart('chart7')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart7"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 8 -->
+            <div class="chart-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="chart-card-header">
+                    <h4>8. Top Actors by Frequency</h4>
+                    <button class="export-btn" onclick="exportChart('chart8')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart8"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 9 -->
+            <div class="chart-card" data-aos="fade-up">
+                <div class="chart-card-header">
+                    <h4>9. Monthly Content Added to Netflix</h4>
+                    <button class="export-btn" onclick="exportChart('chart9')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart9"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 10 -->
+            <div class="chart-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="chart-card-header">
+                    <h4>10. Content Type Stacked Breakdown by Country</h4>
+                    <button class="export-btn" onclick="exportEChart('chart10')"><i class="fa-solid fa-download"></i> PNG</button>
+                </div>
+                <div class="chart-wrapper" id="chart10" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section class="section-container" id="insights">
+        <div class="section-header" data-aos="fade-right">
+            <h2><i class="fa-solid fa-lightbulb"></i> Automated Analytical Insights</h2>
+            <p>Data-driven key takeaways derived directly from dataset aggregations</p>
+        </div>
+        <div class="insights-grid" id="insights-container">
+            <!-- Dynamic Insights Injected by JS -->
+        </div>
+    </section>
+
+    <!-- Dataset Preview Section -->
+    <section class="section-container" id="dataset">
+        <div class="section-header" data-aos="fade-right">
+            <h2><i class="fa-solid fa-database"></i> Interactive Dataset Preview</h2>
+            <p>Filter, search, sort, and paginate through clean dataset records</p>
+        </div>
+        <div class="table-card" data-aos="fade-up">
+            <div class="table-controls">
+                <div class="entries-per-page">
+                    <label for="rows-per-page">Show</label>
+                    <select id="rows-per-page">
+                        <option value="10">10</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span>entries</span>
+                </div>
+                <div class="table-search">
+                    <input type="text" id="table-search-input" placeholder="Search table...">
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table id="netflix-data-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Show ID <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(1)">Type <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(2)">Title <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(3)">Director <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(4)">Country <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(5)">Date Added <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(6)">Release Year <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(7)">Rating <i class="fa-solid fa-sort"></i></th>
+                            <th onclick="sortTable(8)">Duration <i class="fa-solid fa-sort"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Table Rows Injected dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-footer">
+                <div id="table-info">Showing 1 to 25 of 8,709 entries</div>
+                <div class="pagination-controls" id="pagination">
+                    <!-- Pagination Buttons Injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section-container" id="downloads">
+        <div class="section-header" data-aos="fade-right">
+            <h2><i class="fa-solid fa-cloud-arrow-down"></i> Resource Downloads</h2>
+            <p>Access source dataset files and exploratory analysis notebooks</p>
+        </div>
+        <div class="download-grid">
+            <div class="download-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="download-icon"><i class="fa-solid fa-file-csv"></i></div>
+                <h3>Cleaned Netflix Dataset</h3>
+                <p>Complete dataset containing 8,709 cleaned rows and 12 curated metadata columns in standard CSV format.</p>
+                <a href="data/netflix_cleaned.csv" download="netflix_cleaned.csv" class="btn btn-primary">
+                    <i class="fa-solid fa-download"></i> Download CSV (816 KB)
+                </a>
+            </div>
+            <div class="download-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="download-icon"><i class="fa-solid fa-book-open"></i></div>
+                <h3>Jupyter Analysis Notebook</h3>
+                <p>Exploratory Data Analysis code notebook containing Python data cleaning and initial visualization steps.</p>
+                <a href="notebook/Netflix_Exploratory_Data_Analysis.ipynb" download="Netflix_Exploratory_Data_Analysis.ipynb" class="btn btn-secondary">
+                    <i class="fa-solid fa-download"></i> Download Notebook (.ipynb)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top-btn" aria-label="Back to Top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="assets/logo/images.jpg" alt="Netflix Logo" class="footer-logo">
+                <p>Netflix Exploratory Data Analysis Platform</p>
+            </div>
+            <p class="footer-copy">&copy; 2026 Netflix EDA Analytics Dashboard. Built for Data Engineers & Visual Scientists.</p>
+        </div>
+    </footer>
+
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Apache ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <!-- GSAP for Smooth Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- AOS for Scroll Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Application Modular Scripts -->
+    <script src="js/statistics.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/download.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

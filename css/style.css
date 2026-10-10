@@ -1,0 +1,853 @@
+/* ==========================================================================
+   1. ROOT VARIABLES & THEME DEFINITIONS
+   ========================================================================== */
+:root {
+    /* Brand Colors */
+    --primary-red: #E50914;
+    --primary-red-hover: #B81D24;
+    --dark-bg: #141414;
+    --card-bg: rgba(26, 26, 26, 0.85);
+    --card-border: rgba(255, 255, 255, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #FFFFFF;
+    --text-secondary: #AAAAAA;
+    --text-muted: #666666;
+
+    /* UI & Neutral Elements */
+    --border-color: #333333;
+    --hover-bg: rgba(255, 255, 255, 0.08);
+    --input-bg: #222222;
+
+    /* Glassmorphism & Shadows */
+    --glass-backdrop: blur(12px);
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6);
+    --glow-red: 0 0 15px rgba(229, 9, 20, 0.4);
+
+    /* Layout Dimensions */
+    --navbar-height: 70px;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+/* Light Theme Override */
+[data-theme="light"] {
+    --dark-bg: #F5F5F7;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 0, 0, 0.1);
+    --text-primary: #111111;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    --border-color: #E0E0E0;
+    --hover-bg: rgba(0, 0, 0, 0.05);
+    --input-bg: #FFFFFF;
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--dark-bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-red);
+    border-radius: 4px;
+}
+
+/* Background Canvas Particles */
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Scroll Progress Bar */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--primary-red);
+    width: 0%;
+    z-index: 1001;
+    box-shadow: var(--glow-red);
+}
+
+/* Container Structure */
+.section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 24px 40px;
+}
+
+.section-header {
+    margin-bottom: 32px;
+}
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.section-header h2 i {
+    color: var(--primary-red);
+}
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+/* Button Component Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: all var(--transition-fast);
+}
+.btn-primary {
+    background-color: var(--primary-red);
+    color: #FFFFFF;
+}
+.btn-primary:hover {
+    background-color: var(--primary-red-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-red);
+}
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    backdrop-filter: var(--glass-backdrop);
+}
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+.btn-sm {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+}
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+.btn-outline:hover {
+    color: var(--text-primary);
+    border-color: var(--primary-red);
+}
+
+/* ==========================================================================
+   3. HEADER & NAVIGATION BAR
+   ========================================================================== */
+.navbar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-height);
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: var(--glass-backdrop);
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    z-index: 1000;
+    transition: background-color var(--transition-normal);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.nav-logo {
+    height: 36px;
+    object-fit: contain;
+}
+.nav-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-red);
+    letter-spacing: 0.5px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 24px;
+}
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color var(--transition-fast);
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-red);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+.search-box input {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px 8px 34px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    width: 180px;
+    transition: width var(--transition-normal), border-color var(--transition-fast);
+}
+.search-box input:focus {
+    outline: none;
+    width: 240px;
+    border-color: var(--primary-red);
+}
+
+.theme-toggle, .mobile-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    transition: color var(--transition-fast);
+}
+.theme-toggle:hover {
+    color: var(--primary-red);
+}
+.mobile-toggle {
+    display: none;
+}
+
+/* ==========================================================================
+   4. HERO SECTION
+   ========================================================================== */
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 24px 60px;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(229, 9, 20, 0.15) 0%, rgba(20, 20, 20, 0) 70%);
+}
+
+.hero-content {
+    max-width: 850px;
+}
+.hero-logo {
+    height: 60px;
+    margin-bottom: 20px;
+}
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #FFFFFF 0%, var(--primary-red) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+.hero-description {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* ==========================================================================
+   5. KPI METRICS GRID
+   ========================================================================== */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.kpi-card {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+.kpi-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-red);
+}
+.kpi-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(229, 9, 20, 0.15);
+    color: var(--primary-red);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+.kpi-data h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.kpi-data p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   6. FILTER PANEL
+   ========================================================================== */
+.filter-panel {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.filter-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.filter-group label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+.filter-group select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+}
+.filter-group select:focus {
+    border-color: var(--primary-red);
+}
+
+/* ==========================================================================
+   7. CHARTS & VISUALIZATIONS GRID
+   ========================================================================== */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.chart-card {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+    box-shadow: var(--shadow-sm);
+}
+
+.chart-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.chart-card-header h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.export-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.export-btn:hover {
+    color: var(--primary-red);
+    border-color: var(--primary-red);
+}
+
+.chart-wrapper {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    min-height: 280px;
+}
+
+/* ==========================================================================
+   8. AUTOMATED INSIGHTS SECTION
+   ========================================================================== */
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.insight-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--primary-red);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    backdrop-filter: var(--glass-backdrop);
+}
+.insight-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+.insight-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   9. INTERACTIVE DATASET PREVIEW TABLE
+   ========================================================================== */
+.table-card {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+}
+
+.table-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.entries-per-page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.entries-per-page select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.table-search input {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+thead th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+    cursor: pointer;
+    user-select: none;
+}
+thead th:hover {
+    color: var(--primary-red);
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-fast);
+}
+tbody tr:hover {
+    background-color: var(--hover-bg);
+}
+
+tbody td {
+    padding: 12px 16px;
+    color: var(--text-secondary);
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 6px;
+}
+.pagination-controls button {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.pagination-controls button.active, .pagination-controls button:hover {
+    background: var(--primary-red);
+    border-color: var(--primary-red);
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   10. DOWNLOAD SECTION & FOOTER
+   ========================================================================== */
+.download-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.download-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    text-align: center;
+    backdrop-filter: var(--glass-backdrop);
+}
+.download-icon {
+    font-size: 2.5rem;
+    color: var(--primary-red);
+    margin-bottom: 16px;
+}
+.download-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+.download-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+#back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background: var(--primary-red);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    z-index: 999;
+    transition: transform var(--transition-fast);
+}
+#back-to-top-btn:hover {
+    transform: scale(1.1);
+}
+
+.dashboard-footer {
+    border-top: 1px solid var(--card-border);
+    background: rgba(10, 10, 10, 0.9);
+    padding: 40px 24px;
+    text-align: center;
+    margin-top: 80px;
+}
+.footer-logo {
+    height: 30px;
+    margin-bottom: 8px;
+}
+.footer-copy {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 12px;
+}
+
+/* ==========================================================================
+   11. RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: var(--navbar-height);
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - var(--navbar-height));
+        background: var(--dark-bg);
+        flex-direction: column;
+        align-items: center;
+        padding-top: 40px;
+        transition: left var(--transition-normal);
+    }
+    .nav-menu.active {
+        left: 0;
+    }
+    .mobile-toggle {
+        display: block;
+    }
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    .search-box input {
+        width: 120px;
+    }
+    .search-box input:focus {
+        width: 160px;
+    }
+}
+/* ==========================================================================
+   LIGHT MODE CONTRAST OVERRIDES
+   ========================================================================== */
+
+[data-theme="light"] {
+    --text-primary: #141414;
+    --text-secondary: #4a4a4a;
+    --card-bg: #ffffff;
+    --bg-primary: #f4f4f6;
+}
+
+/* Fix Title Visibility ("Netflix", "Exploratory", platform title) */
+[data-theme="light"] .navbar-brand,
+[data-theme="light"] .hero-title,
+[data-theme="light"] .hero-subtitle,
+[data-theme="light"] h1, 
+[data-theme="light"] h2, 
+[data-theme="light"] h3, 
+[data-theme="light"] h4 {
+    color: #141414 !important;
+}
+
+[data-theme="light"] .brand-highlight {
+    color: #E50914 !important; /* Retain Netflix Signature Red */
+}
+
+/* Fix Chart Container Titles and Legends in Light Mode */
+[data-theme="light"] .chart-card {
+    background-color: #ffffff !important;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .chart-card h3 {
+    color: #141414 !important;
+}
+/* ==========================================================================
+   FIX FOR HERO TITLE AND FOOTER TEXT CONTRAST
+   ========================================================================== */
+
+/* Fix Hero Heading Text Visibility in Light Mode */
+[data-theme="light"] .hero-title,
+[data-theme="light"] .hero-title span,
+[data-theme="light"] h1,
+[data-theme="light"] h1 span {
+    color: #141414 !important;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+}
+
+/* Ensure 'Netflix' stays Netflix Red if highlighted */
+[data-theme="light"] .hero-title .brand-red,
+[data-theme="light"] .hero-title span.highlight {
+    color: #E50914 !important;
+    -webkit-text-fill-color: #E50914 !important;
+}
+
+/* Fix Footer Platform Text Contrast in Dark Mode */
+.footer-brand,
+footer .platform-title,
+footer p,
+footer h3,
+footer h4 {
+    color: #E5E5E5 !important;
+}
+
+/* Fix Footer Platform Text Contrast in Light Mode */
+[data-theme="light"] .footer-brand,
+[data-theme="light"] footer .platform-title,
+[data-theme="light"] footer p,
+[data-theme="light"] footer h3,
+[data-theme="light"] footer h4 {
+    color: #141414 !important;
+}
+
+/* ==========================================================================
+   FOOTER TEXT CONTRAST FIX
+   ========================================================================== */
+
+/* 1. Default / Dark Mode: Ensure high visibility for footer text */
+footer,
+footer p,
+footer span,
+footer div,
+.footer-brand,
+.footer-content {
+    color: #E5E5E5 !important;
+    opacity: 1 !important;
+}
+
+/* Ensure secondary copyright text is soft white/light grey */
+footer .copyright-text,
+footer p:last-child {
+    color: #AAAAAA !important;
+}
+
+/* 2. Light Mode Override: Dark text against light background */
+[data-theme="light"] footer,
+[data-theme="light"] footer p,
+[data-theme="light"] footer span,
+[data-theme="light"] footer div,
+[data-theme="light"] .footer-brand,
+[data-theme="light"] .footer-content {
+    color: #E5E5E5 !important;
+}
+
+[data-theme="light"] footer .copyright-text,
+[data-theme="light"] footer p:last-child {
+    color:  #AAAAAA !important;
+}
